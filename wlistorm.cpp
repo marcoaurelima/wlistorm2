@@ -17,7 +17,7 @@ int main(int argc, char* argv[]){
 
   if(!printContinue()){ return 0; }
 
-  std::cout << "gerando...\n\n";
+  std::cout << "\n Processando...\n\n";
 
   return 0;
 }

@@ -76,7 +76,7 @@ long unsigned fact(long unsigned n)
 std::unique_ptr<WlistSize> getWlistSize(const WlistInfo& wlistInfo)
 {
   // For each value on range (params 1 and 2 of comand-line entry)
-  std::vector<long unsigned> qtdLines;
+  std::vector<long unsigned> qtdTotalLines;
   std::vector<long unsigned> sizeLines;
 
   for(unsigned p=wlistInfo.min;p<=wlistInfo.max;p++)
@@ -85,10 +85,10 @@ std::unique_ptr<WlistSize> getWlistSize(const WlistInfo& wlistInfo)
 
     if(wlistInfo.repeatitions == -1)
     {
-      qtdLines.push_back(static_cast<long int>(powl(n, p)));
+      qtdTotalLines.push_back(static_cast<long int>(powl(n, p)));
     } else if(wlistInfo.repeatitions == 1)
     {
-      qtdLines.push_back(static_cast<long int>(fact(n) / fact(n-p)));
+      qtdTotalLines.push_back(static_cast<long int>(fact(n) / fact(n-p)));
     }
   }
 
@@ -100,24 +100,28 @@ std::unique_ptr<WlistSize> getWlistSize(const WlistInfo& wlistInfo)
     if(i != '~'){ realMaskSize++; }
   }
 
-  for(auto& i : qtdLines)
+  int i = 0;
+  for(unsigned p=wlistInfo.min;p<=wlistInfo.max;p++)
   {
-    sizeLines.push_back(i + realMaskSize);
+    // (p+1) Because of \n in each line
+    sizeLines.push_back((qtdTotalLines[i++] + realMaskSize) * (p+1));
   }
-
 
   auto wlistSize = std::make_unique<WlistSize>();
 
-  for(unsigned i=0;i<=qtdLines.size();i++)
+
+  for(unsigned i=0;i<=qtdTotalLines.size();i++)
   {
-    wlistSize->ln += qtdLines[i];
-    wlistSize->by += (qtdLines[i] * sizeLines[i]);
+    wlistSize->ln += qtdTotalLines[i];
+    wlistSize->by += sizeLines[i];
   }
 
-  wlistSize->mb = wlistSize->by / pow(1024, 1);
-  wlistSize->gb = wlistSize->by / pow(1024, 2);
-  wlistSize->tb = wlistSize->by / pow(1024, 3);
-  wlistSize->pb = wlistSize->by / pow(1024, 4);
+
+  wlistSize->kb = wlistSize->by / pow(1024, 1);
+  wlistSize->mb = wlistSize->by / pow(1024, 2);
+  wlistSize->gb = wlistSize->by / pow(1024, 3);
+  wlistSize->tb = wlistSize->by / pow(1024, 4);
+  wlistSize->pb = wlistSize->by / pow(1024, 5);
 
   return wlistSize;
 }
@@ -130,17 +134,30 @@ std::unique_ptr<WlistSize> getWlistSize(const WlistInfo& wlistInfo)
 */
 void printInfo(const WlistInfo& wlistInfo)
 {
-  std::cout << "\npssw size: "<< wlistInfo.min;
+  std::cout << "\n pssw size: "<< wlistInfo.min;
   if(wlistInfo.min != wlistInfo.max)
   std::cout << "-" << wlistInfo.max << "    ";
 
   if(wlistInfo.repeatitions != -1)
-  std::cout << "char repeat: " << wlistInfo.repeatitions;
-  std::cout << "\nalphabet:  "  << wlistInfo.alphabet << "\n";
+  std::cout << " char repeat: " << wlistInfo.repeatitions;
+  std::cout << "\n alphabet:  "  << wlistInfo.alphabet << "\n";
 
   if(wlistInfo.mask.size() != 0)
-  std::cout << "mask:      "  << wlistInfo.mask << "\n";
-  std::cout << "output:    "  << wlistInfo.filename << "\n\n";
+  std::cout << " mask:      "  << wlistInfo.mask << "\n";
+  std::cout << " output:    "  << wlistInfo.filename << "\n\n";
+}
+
+
+/**
+    Arround double value in string
+    @param value and quantity of decimal points
+    @return string.
+*/
+
+std::string arroundValue(std::string value, int decimalPoints)
+{
+  value += "000";
+  return value.substr(0, value.find('.') + decimalPoints + 1);
 }
 
 
@@ -151,22 +168,35 @@ void printInfo(const WlistInfo& wlistInfo)
 */
 void printSize(const WlistSize& wlistSize)
 {
-  std::cout << "Output file size:  " << wlistSize.ln << "[LN]\n";
-  std::cout << "                   ";
-  std::cout << (std::ceil(wlistSize.mb * 100.0) / 100.0) << "[MB]  ";
-  std::cout << (std::ceil(wlistSize.gb * 1000.0) / 1000.0) << "[GB]  ";
-  std::cout << (std::ceil(wlistSize.tb * 1000.0) / 1000.0) << "[TB]  ";
-  std::cout << (std::ceil(wlistSize.pb * 1000.0) / 1000.0) << "[PB] \n\n";
+  std::cout << " Output file size (" << wlistSize.ln << " Lines)" << ": \n";
+  std::cout << " [B]  " << wlistSize.by << "\n";
+
+  if(arroundValue(std::to_string(wlistSize.kb), 3) != "0.000")
+  std::cout << " [KB] " << arroundValue(std::to_string(wlistSize.kb), 3) << "\n";
+
+  if(arroundValue(std::to_string(wlistSize.mb), 3) != "0.000")
+  std::cout << " [MB] " << arroundValue(std::to_string(wlistSize.mb), 3) << "\n";
+
+  if(arroundValue(std::to_string(wlistSize.gb), 2) != "0.00")
+  std::cout << " [GB] " << arroundValue(std::to_string(wlistSize.gb), 2) << "\n";
+
+  if(arroundValue(std::to_string(wlistSize.tb), 2) != "0.00")
+  std::cout << " [TB] " << arroundValue(std::to_string(wlistSize.tb), 2) << "\n";
+
+  if(arroundValue(std::to_string(wlistSize.pb), 2) != "0.00")
+  std::cout << " [PB] " << arroundValue(std::to_string(wlistSize.pb), 2) << " \n";
+
+  std::cout << "\n";
 }
 
 bool printContinue()
 {
-  std::cout << "Continue? [y/n] ";
+  std::cout << " Continue? [y/n] ";
   std::string yn;
   std::getline(std::cin, yn);
   if(yn == "n")
   {
-    std::cout << "-- Cancelado --\n\n";
+    std::cout << " -- Cancelado --\n\n";
     return false;
   }
   return true;

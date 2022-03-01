@@ -10,6 +10,8 @@
 void printLogo();
 std::unique_ptr<WlistInfo> getWlistInfo(int argc, char* argv[]);
 
+std::string arroundValue(std::string value, int decimalPoints);
+
 long unsigned fact(long unsigned n);
 
 void printInfo(const WlistInfo& wlistInfo);

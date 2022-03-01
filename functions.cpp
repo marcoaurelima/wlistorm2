@@ -1,8 +1,5 @@
 #include "functions.h"
 
-/**
-    Just print wlistorm logo.
-*/
 void printLogo()
 {
   system("clear");
@@ -14,6 +11,7 @@ void printLogo()
    \__/\  / |____/__/____  > |__|  \____/|__|  |__|_|  /
         \/               \/      wordlist generator  \/)" << '\n';
 }
+
 
 /**
     Calculate the factorial of a number..
@@ -30,7 +28,7 @@ std::unique_ptr<WlistInfo> getWlistInfo(int argc, char* argv[])
   wlistInfo->alphabet = std::string(argv[3]);
 
   // Default values
-  wlistInfo->repeatitions = 0;     // Zero means allow all repeatitions.
+  wlistInfo->repeatitions = -1;     // -1 means allow all repeatitions.
   wlistInfo->filename = "Terminal"; // If not was not defined a outputfile.
   wlistInfo->mask = "";
 
@@ -77,29 +75,27 @@ long unsigned fact(long unsigned n)
 */
 std::unique_ptr<WlistSize> getWlistSize(const WlistInfo& wlistInfo)
 {
-  long unsigned totalSize = 0;
+  long unsigned totalLines = 0;
 
   for(unsigned p=wlistInfo.min;p<=wlistInfo.max;p++)
   {
     int n = wlistInfo.alphabet.size();
 
-    if(wlistInfo.repeatitions == 1)
+    if(wlistInfo.repeatitions == -1)
     {
-      totalSize += static_cast<long int>(powl(n, p));
-    } else if(wlistInfo.repeatitions == p)
+      totalLines += static_cast<long int>(powl(n, p));
+    } else if(wlistInfo.repeatitions == 1)
     {
-      std::cout << "***\n";
-      totalSize += static_cast<long int>(fact(n) / fact(n-p));
+      totalLines += static_cast<long int>(fact(n) / fact(n-p));
     }
-
   }
 
   auto wlistSize = std::make_unique<WlistSize>();
-
-  wlistSize->mb = totalSize;
+  wlistSize->ln = totalLines;
 
   return wlistSize;
 }
+
 
 /**
     Print information of comand-line entry.
@@ -115,6 +111,7 @@ void printInfo(const WlistInfo& wlistInfo)
   std::cout << "mask:      "  << wlistInfo.mask << "\n";
   std::cout << "output:    "  << wlistInfo.filename << "\n\n";
 }
+
 
 /**
     Print information of file size output.

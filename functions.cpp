@@ -12,12 +12,7 @@ void print_logo()
         \/               \/      wordlist generator  \/)";
 }
 
-wl_size* get_wl_size()
+WlistSize* getWlistSize(WlistInfo* wlistInfo)
 {
-  return new wl_size{};
-}
-
-wl_size* get_wl_size(wl_info* info)
-{
-
+  return new WlistSize{};
 }

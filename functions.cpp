@@ -15,6 +15,11 @@ void printLogo()
         \/               \/      wordlist generator  \/)" << '\n';
 }
 
+/**
+    Calculate the factorial of a number..
+    @param Comand-line values.
+    @return Smart point to a WlistInfo.
+*/
 std::unique_ptr<WlistInfo> getWlistInfo(int argc, char* argv[])
 {
 
@@ -48,6 +53,12 @@ std::unique_ptr<WlistInfo> getWlistInfo(int argc, char* argv[])
   return wlistInfo;
 }
 
+
+/**
+    Calculate the factorial of a number..
+    @param Value.
+    @return Factorial of value.
+*/
 long unsigned fact(long unsigned n)
 {
   int result = 1;
@@ -90,6 +101,11 @@ std::unique_ptr<WlistSize> getWlistSize(const WlistInfo& wlistInfo)
   return wlistSize;
 }
 
+/**
+    Print information of comand-line entry.
+    @param Reference to a WlistInfo.
+    @return void.
+*/
 void printInfo(const WlistInfo& wlistInfo)
 {
   std::cout << "\npssw size: "<< wlistInfo.min << "-" << wlistInfo.max << "    ";
@@ -100,6 +116,11 @@ void printInfo(const WlistInfo& wlistInfo)
   std::cout << "output:    "  << wlistInfo.filename << "\n\n";
 }
 
+/**
+    Print information of file size output.
+    @param Reference to a WlistSize.
+    @return void.
+*/
 void printSize(const WlistSize& wlistSize)
 {
   std::cout << "Output file size:  " << wlistSize.ln << "[LN]\n";

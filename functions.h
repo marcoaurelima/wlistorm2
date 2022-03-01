@@ -13,6 +13,7 @@ long unsigned fact(long unsigned n);
 
 void printInfo(const WlistInfo& wlistInfo);
 void printSize(const WlistSize& wlistSize);
+bool printContinue();
 
 std::unique_ptr<WlistSize> getWlistSize(const WlistInfo& wlistInfo);
 

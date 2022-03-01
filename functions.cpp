@@ -125,3 +125,16 @@ void printSize(const WlistSize& wlistSize)
   std::cout << wlistSize.mb << "[MB]  " << wlistSize.gb << "[GB]  ";
   std::cout << wlistSize.tb << "[TB]  " << wlistSize.pb << "[PB] \n\n";
 }
+
+bool printContinue()
+{
+  std::cout << "Continue? [y/n] ";
+  std::string yn;
+  std::getline(std::cin, yn);
+  if(yn == "n")
+  {
+    std::cout << "-- Cancelado --\n\n";
+    return false;
+  }
+  return true;
+}

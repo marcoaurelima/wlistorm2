@@ -15,5 +15,9 @@ int main(int argc, char* argv[]){
   auto wlistSize = getWlistSize(*wlistInfo);
   printSize(*wlistSize);
 
+  if(!printContinue()){ return 0; }
+
+  std::cout << "gerando...\n\n";
+
   return 0;
 }

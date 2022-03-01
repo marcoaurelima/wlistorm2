@@ -2,6 +2,7 @@
 #define FUNCTIONS_H
 #include <iostream>
 #include <memory>
+#include <cmath>
 #include "structs.h"
 
 void printLogo();

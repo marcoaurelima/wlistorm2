@@ -1,5 +1,8 @@
 #include "functions.h"
 
+/**
+    Just print wlistorm logo.
+*/
 void printLogo()
 {
   system("clear");
@@ -12,8 +15,16 @@ void printLogo()
         \/               \/      wordlist generator  \/)" << '\n';
 }
 
+
+/**
+    Calculate word list size.
+    @param Reference to a WlistInfo.
+    @return Smart Pointer to a WlistSize that contains the size in MB, GB, Tb and PB.
+*/
 std::unique_ptr<WlistSize> getWlistSize(const WlistInfo& wlistInfo)
 {
+  int range = abs(wlistInfo.max - wlistInfo.min); 
+
   auto wlistSize = std::make_unique<WlistSize>();
 
   return wlistSize;

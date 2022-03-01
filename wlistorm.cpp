@@ -1,9 +1,9 @@
 #include "functions.h"
 
 int main(){
-  print_logo();
+  printLogo();
 
-  auto wlistInfo = std::make_shared<WlistInfo>();
+  WlistInfo wlistInfo{};
 
   auto wlistSize = getWlistSize(wlistInfo);
 

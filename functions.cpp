@@ -1,6 +1,6 @@
 #include "functions.h"
 
-void print_logo()
+void printLogo()
 {
   system("clear");
   std::cout << R"(
@@ -12,9 +12,15 @@ void print_logo()
         \/               \/      wordlist generator  \/)" << '\n';
 }
 
-std::unique_ptr<WlistSize> getWlistSize(std::shared_ptr<WlistInfo> wlistInfo)
+std::unique_ptr<WlistSize> getWlistSize(const WlistInfo& wlistInfo)
 {
-  std::unique_ptr<WlistSize> wlistSize(new WlistSize{});
+  auto wlistSize = std::make_unique<WlistSize>();
 
   return wlistSize;
+}
+
+
+void printSize()
+{
+
 }

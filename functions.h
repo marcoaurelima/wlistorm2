@@ -4,8 +4,10 @@
 #include <memory>
 #include "structs.h"
 
-void print_logo();
+void printLogo();
 
-std::unique_ptr<WlistSize> getWlistSize(std::shared_ptr<WlistInfo> wlistInfo);
+void printSize();
+
+std::unique_ptr<WlistSize> getWlistSize(const WlistInfo& wlistInfo);
 
 #endif

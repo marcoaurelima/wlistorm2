@@ -8,6 +8,7 @@ struct WlistInfo{
 };
 
 struct WlistSize{
+  long unsigned ln;
   long unsigned mb;
   int gb;
   int tb;

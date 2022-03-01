@@ -25,7 +25,7 @@ std::unique_ptr<WlistInfo> getWlistInfo(int argc, char* argv[])
   wlistInfo->alphabet = std::string(argv[3]);
 
   // Default values
-  wlistInfo->repeatitions = -1;      // Zero means allow all repeatitions.
+  wlistInfo->repeatitions = 0;     // Zero means allow all repeatitions.
   wlistInfo->filename = "Terminal"; // If not was not defined a outputfile.
   wlistInfo->mask = "";
 
@@ -95,13 +95,15 @@ void printInfo(const WlistInfo& wlistInfo)
   std::cout << "\npssw size: "<< wlistInfo.min << "-" << wlistInfo.max << "    ";
   std::cout << "max repeat: " << wlistInfo.repeatitions << "\n";
   std::cout << "alphabet:  "  << wlistInfo.alphabet << "\n";
+  if(wlistInfo.mask.size() != 0)
   std::cout << "mask:      "  << wlistInfo.mask << "\n";
   std::cout << "output:    "  << wlistInfo.filename << "\n\n";
 }
 
 void printSize(const WlistSize& wlistSize)
 {
-  std::cout << "Output file size:  ";
+  std::cout << "Output file size:  " << wlistSize.ln << "[LN]\n";
+  std::cout << "                   ";
   std::cout << wlistSize.mb << "[MB]  " << wlistSize.gb << "[GB]  ";
   std::cout << wlistSize.tb << "[TB]  " << wlistSize.pb << "[PB] \n\n";
 }

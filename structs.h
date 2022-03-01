@@ -9,8 +9,9 @@ struct WlistInfo{
 
 struct WlistSize{
   long unsigned ln;
-  long unsigned mb;
-  int gb;
-  int tb;
-  int pb;
+  long unsigned by;
+  long double mb;
+  double gb;
+  double tb;
+  double pb;
 };

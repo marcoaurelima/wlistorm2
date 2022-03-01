@@ -75,7 +75,9 @@ long unsigned fact(long unsigned n)
 */
 std::unique_ptr<WlistSize> getWlistSize(const WlistInfo& wlistInfo)
 {
-  long unsigned totalLines = 0;
+  // For each value on range (params 1 and 2 of comand-line entry)
+  std::vector<long unsigned> qtdLines;
+  std::vector<long unsigned> sizeLines;
 
   for(unsigned p=wlistInfo.min;p<=wlistInfo.max;p++)
   {
@@ -83,15 +85,39 @@ std::unique_ptr<WlistSize> getWlistSize(const WlistInfo& wlistInfo)
 
     if(wlistInfo.repeatitions == -1)
     {
-      totalLines += static_cast<long int>(powl(n, p));
+      qtdLines.push_back(static_cast<long int>(powl(n, p)));
     } else if(wlistInfo.repeatitions == 1)
     {
-      totalLines += static_cast<long int>(fact(n) / fact(n-p));
+      qtdLines.push_back(static_cast<long int>(fact(n) / fact(n-p)));
     }
   }
 
+  // Calculate the size in bytes of a range:
+
+  int realMaskSize = 0; // Size of mask without all '~'
+  for(auto& i : wlistInfo.mask)
+  {
+    if(i != '~'){ realMaskSize++; }
+  }
+
+  for(auto& i : qtdLines)
+  {
+    sizeLines.push_back(i + realMaskSize);
+  }
+
+
   auto wlistSize = std::make_unique<WlistSize>();
-  wlistSize->ln = totalLines;
+
+  for(unsigned i=0;i<=qtdLines.size();i++)
+  {
+    wlistSize->ln += qtdLines[i];
+    wlistSize->by += (qtdLines[i] * sizeLines[i]);
+  }
+
+  wlistSize->mb = wlistSize->by / pow(1024, 1);
+  wlistSize->gb = wlistSize->by / pow(1024, 2);
+  wlistSize->tb = wlistSize->by / pow(1024, 3);
+  wlistSize->pb = wlistSize->by / pow(1024, 4);
 
   return wlistSize;
 }
@@ -104,9 +130,14 @@ std::unique_ptr<WlistSize> getWlistSize(const WlistInfo& wlistInfo)
 */
 void printInfo(const WlistInfo& wlistInfo)
 {
-  std::cout << "\npssw size: "<< wlistInfo.min << "-" << wlistInfo.max << "    ";
-  std::cout << "max repeat: " << wlistInfo.repeatitions << "\n";
-  std::cout << "alphabet:  "  << wlistInfo.alphabet << "\n";
+  std::cout << "\npssw size: "<< wlistInfo.min;
+  if(wlistInfo.min != wlistInfo.max)
+  std::cout << "-" << wlistInfo.max << "    ";
+
+  if(wlistInfo.repeatitions != -1)
+  std::cout << "char repeat: " << wlistInfo.repeatitions;
+  std::cout << "\nalphabet:  "  << wlistInfo.alphabet << "\n";
+
   if(wlistInfo.mask.size() != 0)
   std::cout << "mask:      "  << wlistInfo.mask << "\n";
   std::cout << "output:    "  << wlistInfo.filename << "\n\n";
@@ -122,8 +153,10 @@ void printSize(const WlistSize& wlistSize)
 {
   std::cout << "Output file size:  " << wlistSize.ln << "[LN]\n";
   std::cout << "                   ";
-  std::cout << wlistSize.mb << "[MB]  " << wlistSize.gb << "[GB]  ";
-  std::cout << wlistSize.tb << "[TB]  " << wlistSize.pb << "[PB] \n\n";
+  std::cout << (std::ceil(wlistSize.mb * 100.0) / 100.0) << "[MB]  ";
+  std::cout << (std::ceil(wlistSize.gb * 1000.0) / 1000.0) << "[GB]  ";
+  std::cout << (std::ceil(wlistSize.tb * 1000.0) / 1000.0) << "[TB]  ";
+  std::cout << (std::ceil(wlistSize.pb * 1000.0) / 1000.0) << "[PB] \n\n";
 }
 
 bool printContinue()

@@ -12,7 +12,9 @@ void print_logo()
         \/               \/      wordlist generator  \/)";
 }
 
-WlistSize* getWlistSize(WlistInfo* wlistInfo)
+std::unique_ptr<WlistSize> getWlistSize(WlistInfo* wlistInfo)
 {
-  return new WlistSize{};
+  std::unique_ptr<WlistSize> wlistSize(new WlistSize{});
+  
+  return wlistSize;
 }

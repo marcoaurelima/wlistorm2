@@ -9,12 +9,12 @@ void print_logo()
  \   \/\/   /  | |  |/  ___/\   __\/  _ \_  __ \/     \
   \        /|  |_|  |\___ \  |  | (  <_> )  | \/  Y Y  \
    \__/\  / |____/__/____  > |__|  \____/|__|  |__|_|  /
-        \/               \/      wordlist generator  \/)";
+        \/               \/      wordlist generator  \/)" << '\n';
 }
 
-std::unique_ptr<WlistSize> getWlistSize(WlistInfo* wlistInfo)
+std::unique_ptr<WlistSize> getWlistSize(std::shared_ptr<WlistInfo> wlistInfo)
 {
   std::unique_ptr<WlistSize> wlistSize(new WlistSize{});
-  
+
   return wlistSize;
 }

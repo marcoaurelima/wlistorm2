@@ -6,6 +6,6 @@
 
 void print_logo();
 
-std::unique_ptr<WlistSize> getWlistSize(WlistInfo* wlistInfo);
+std::unique_ptr<WlistSize> getWlistSize(std::shared_ptr<WlistInfo> wlistInfo);
 
 #endif

@@ -6,7 +6,8 @@
 
 void printLogo();
 
-void printSize();
+void printInfo(const WlistInfo& wlistInfo);
+void printSize(const WlistSize& wlistSize);
 
 std::unique_ptr<WlistSize> getWlistSize(const WlistInfo& wlistInfo);
 

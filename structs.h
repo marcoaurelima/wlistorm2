@@ -7,8 +7,8 @@ struct WlistInfo{
 };
 
 struct WlistSize{
-  int b;
-  int Mb;
-  int Gb;
-  int Tb;
+  int mb;
+  int gb;
+  int tb;
+  int pb;
 };

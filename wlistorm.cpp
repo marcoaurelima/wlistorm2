@@ -3,11 +3,13 @@
 int main(){
   printLogo();
 
-  WlistInfo wlistInfo{};
+
+  WlistInfo wlistInfo{2,3,4,"abcd","wordlist.txt"};
+  printInfo(wlistInfo);
 
   auto wlistSize = getWlistSize(wlistInfo);
+  printSize(*wlistSize);
 
-  std::cout << ">> " << wlistSize->Mb << std::endl;
-  std::cout << "teste3" << std::endl;
+
   return 0;
 }

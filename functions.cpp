@@ -19,8 +19,17 @@ std::unique_ptr<WlistSize> getWlistSize(const WlistInfo& wlistInfo)
   return wlistSize;
 }
 
-
-void printSize()
+void printInfo(const WlistInfo& wlistInfo)
 {
+  std::cout << "\npass size: "<< wlistInfo.min << "-" << wlistInfo.max << "    ";
+  std::cout << "max repeat: " << wlistInfo.repeatitions << "\n";
+  std::cout << "alphabet:  "  << wlistInfo.alphabet << "\n";
+  std::cout << "output:    "  << wlistInfo.filename << "\n\n";
+}
 
+void printSize(const WlistSize& wlistSize)
+{
+  std::cout << "Output file size:  ";
+  std::cout << wlistSize.mb << "[MB]  " << wlistSize.gb << "[GB]  ";
+  std::cout << wlistSize.tb << "[TB]  " << wlistSize.pb << "[PB] \n\n";
 }

@@ -28,7 +28,7 @@ std::unique_ptr<WlistInfo> getWlistInfo(int argc, char* argv[])
   wlistInfo->alphabet = std::string(argv[3]);
 
   // Default values
-  wlistInfo->repeatitions = -1;     // -1 means allow all repeatitions.
+  wlistInfo->repeatitions = atoi(argv[2]);     // -1 means allow all repeatitions.
   wlistInfo->filename = "Terminal"; // If not was not defined a outputfile.
   wlistInfo->mask = "";
 
@@ -83,7 +83,7 @@ std::unique_ptr<WlistSize> getWlistSize(const WlistInfo& wlistInfo)
   {
     int n = wlistInfo.alphabet.size();
 
-    if(wlistInfo.repeatitions == -1)
+    if(wlistInfo.repeatitions == wlistInfo.max)
     {
       qtdTotalLines.push_back(static_cast<long int>(powl(n, p)));
     } else if(wlistInfo.repeatitions == 1)
@@ -230,7 +230,6 @@ void makeWordlist(const WlistInfo& wlistInfo)
   auto increment = [wlistInfo](std::vector<int>& indexes)-> void
   {
     indexes[indexes.size()-1]++;
-
     for(int i=indexes.size()-1;i>=1;i--)
     {
       if(indexes[i] == wlistInfo.alphabet.size())
@@ -239,33 +238,44 @@ void makeWordlist(const WlistInfo& wlistInfo)
         indexes[i-1]++;
       }
     }
-
   };
+
+  // Verify if the quantity of repeatitions is OK in current word.
+  auto allowWord = [wlistInfo](const std::vector<int>& indexes)-> bool
+  {
+    for(unsigned i=0;i<indexes.size();i++)
+    {
+      int cont = 0;
+      for(unsigned j=i;j<indexes.size();j++)
+      {
+        if(indexes[j] == indexes[i]){ cont++; }
+      }
+      if(cont > wlistInfo.repeatitions) { return false; }
+    }
+    return true;
+  };
+
 
   auto printWord = [wlistInfo](const std::vector<int>& indexes)-> void
   {
     static int cont = 1;
+
     std::cout << "[" << cont++ << "] ";
-
-    for(auto& i : indexes){
-      std::cout << i;
-    }
-    puts("");
-
-    //if(cont == 20) { exit(0); }
+    for(auto& i : indexes){ std::cout << i; }
+    std::cout << "\n";
   };
 
   for(unsigned i=0;i<indexes.size();i++)
   {
-
       while(loop(indexes[i]))
       {
         printWord(indexes[i]);
         increment(indexes[i]);
       }
-
       printWord(indexes[i]);
-}
+  }
+
+  std::cout << "***\n\n";
 
 
 }

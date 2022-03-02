@@ -153,7 +153,6 @@ void printInfo(const WlistInfo& wlistInfo)
     @param value and quantity of decimal points
     @return string.
 */
-
 std::string arroundValue(std::string value, int decimalPoints)
 {
   value += "000";
@@ -201,3 +200,110 @@ bool printContinue()
   }
   return true;
 }
+
+
+void makeWordlist(const WlistInfo& wlistInfo)
+{
+  // The combination will occur throung manipulating integer indexes.
+  // A integer vector will be used.
+  // To password of 5 chars, and alphabet '0123456789',
+  // the vector start at [0,0,0,0,0] and ends at [9,9,9,9,9], where each]
+  // integer value represents a index of alphabet.
+
+  std::vector<std::vector<int>> indexes;
+  for(unsigned i=wlistInfo.min;i<=wlistInfo.max;i++)
+  {
+    std::vector<int> item(i,0);
+    indexes.push_back(item);
+  }
+
+
+  auto loop = [wlistInfo](const std::vector<int>& indexes)-> bool
+  {
+      for(const auto& val : indexes)
+      {
+        if(val != wlistInfo.alphabet.size()-1){ return true; }
+      }
+      return false;
+  };
+
+  auto increment = [wlistInfo](std::vector<int>& indexes)-> void
+  {
+    indexes[indexes.size()-1]++;
+
+    for(int i=indexes.size()-1;i>=1;i--)
+    {
+      if(indexes[i] == wlistInfo.alphabet.size())
+      {
+        indexes[i] = 0;
+        indexes[i-1]++;
+      }
+    }
+
+  };
+
+  auto printWord = [wlistInfo](const std::vector<int>& indexes)-> void
+  {
+    static int cont = 1;
+    std::cout << "[" << cont++ << "] ";
+
+    for(auto& i : indexes){
+      std::cout << i;
+    }
+    puts("");
+
+    //if(cont == 20) { exit(0); }
+  };
+
+  for(unsigned i=0;i<indexes.size();i++)
+  {
+
+      while(loop(indexes[i]))
+      {
+        printWord(indexes[i]);
+        increment(indexes[i]);
+      }
+
+      printWord(indexes[i]);
+}
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//

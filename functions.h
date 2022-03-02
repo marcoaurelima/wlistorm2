@@ -18,6 +18,8 @@ void printInfo(const WlistInfo& wlistInfo);
 void printSize(const WlistSize& wlistSize);
 bool printContinue();
 
+void makeWordlist(const WlistInfo& wlistInfo);
+
 std::unique_ptr<WlistSize> getWlistSize(const WlistInfo& wlistInfo);
 
 #endif

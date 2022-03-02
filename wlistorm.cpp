@@ -3,12 +3,6 @@
 int main(int argc, char* argv[]){
   printLogo();
 
-/*
-  int p = std::stoi(argv[1]);
-  int n = std::stoi(argv[2]);
-  std::cout << static_cast<long int>(powl(n, p)) << "\n";
-*/
-
   auto wlistInfo = getWlistInfo(argc, argv);
   printInfo(*wlistInfo);
 
@@ -17,7 +11,10 @@ int main(int argc, char* argv[]){
 
   if(!printContinue()){ return 0; }
 
+
   std::cout << "\n Processando...\n\n";
+
+  makeWordlist(*wlistInfo);
 
   return 0;
 }

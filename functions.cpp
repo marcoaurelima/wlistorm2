@@ -83,13 +83,14 @@ std::unique_ptr<WlistSize> getWlistSize(const WlistInfo& wlistInfo)
   {
     int n = wlistInfo.alphabet.size();
 
-    if(wlistInfo.repeatitions == wlistInfo.max)
-    {
-      qtdTotalLines.push_back(static_cast<long int>(powl(n, p)));
-    } else if(wlistInfo.repeatitions == 1)
+    if(wlistInfo.repeatitions == 1)
     {
       qtdTotalLines.push_back(static_cast<long int>(fact(n) / fact(n-p)));
+    } else
+    {
+      qtdTotalLines.push_back(static_cast<long int>(powl(n, p)));
     }
+
   }
 
   // Calculate the size in bytes of a range:

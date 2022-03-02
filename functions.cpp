@@ -202,7 +202,7 @@ bool printContinue()
 }
 
 
-void makeWordlist(const WlistInfo& wlistInfo)
+void makeWordlist(const WlistInfo& wlistInfo, const WlistSize& wlistSize)
 {
   // The combination will occur throung manipulating integer indexes.
   // A integer vector will be used.
@@ -264,16 +264,20 @@ void makeWordlist(const WlistInfo& wlistInfo)
     file = std::ofstream(wlistInfo.filename, std::ios::app);
   }
 
-  auto handleWord = [&file, wlistInfo](const std::vector<int>& indexes)-> void
+  auto handleWord = [&file, wlistInfo, wlistSize](const std::vector<int>& indexes)-> void
   {
+    static long unsigned cont = 1;
+
     if(wlistInfo.filename == "Terminal")
     {
-      static int cont = 1;
       std::cout << "[" << cont++ << "] ";
       for(auto& i : indexes){ std::cout << wlistInfo.alphabet[i]; }
       std::cout << "\n";
       return;
     }
+
+
+    cont++;
 
     for(auto& i : indexes){ file << wlistInfo.alphabet[i]; }
     file << "\n";
@@ -294,6 +298,6 @@ void makeWordlist(const WlistInfo& wlistInfo)
 
   file.close();
 
-  std::cout << "***\n\n";
+  std::cout << " ***\n\n";
 
 }

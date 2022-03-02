@@ -11,10 +11,7 @@ int main(int argc, char* argv[]){
 
   if(!printContinue()){ return 0; }
 
-
-  std::cout << "\n Processando...\n\n";
-
-  makeWordlist(*wlistInfo);
+  makeWordlist(*wlistInfo, *wlistSize);
 
   return 0;
 }

@@ -20,7 +20,7 @@ void printInfo(const WlistInfo& wlistInfo);
 void printSize(const WlistSize& wlistSize);
 bool printContinue();
 
-void makeWordlist(const WlistInfo& wlistInfo);
+void makeWordlist(const WlistInfo& wlistInfo, const WlistSize& wlistSize);
 
 std::unique_ptr<WlistSize> getWlistSize(const WlistInfo& wlistInfo);
 

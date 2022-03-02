@@ -256,66 +256,44 @@ void makeWordlist(const WlistInfo& wlistInfo)
   };
 
 
-  auto printWord = [wlistInfo](const std::vector<int>& indexes)-> void
+  std::ofstream file;
+  if(wlistInfo.filename != "Terminal")
   {
-    static int cont = 1;
+    file = std::ofstream(wlistInfo.filename, std::ios::trunc);
+    file.close();
+    file = std::ofstream(wlistInfo.filename, std::ios::app);
+  }
 
-    std::cout << "[" << cont++ << "] ";
-    for(auto& i : indexes){ std::cout << i; }
-    std::cout << "\n";
+  auto handleWord = [&file, wlistInfo](const std::vector<int>& indexes)-> void
+  {
+    if(wlistInfo.filename == "Terminal")
+    {
+      static int cont = 1;
+      std::cout << "[" << cont++ << "] ";
+      for(auto& i : indexes){ std::cout << wlistInfo.alphabet[i]; }
+      std::cout << "\n";
+      return;
+    }
+
+    for(auto& i : indexes){ file << wlistInfo.alphabet[i]; }
+    file << "\n";
   };
+
 
   for(unsigned i=0;i<indexes.size();i++)
   {
       while(loop(indexes[i]))
       {
         if(allowWord(indexes[i]))
-        printWord(indexes[i]);
+        handleWord(indexes[i]);
         increment(indexes[i]);
       }
       if(allowWord(indexes[i]))
-      printWord(indexes[i]);
+      handleWord(indexes[i]);
   }
+
+  file.close();
 
   std::cout << "***\n\n";
 
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//

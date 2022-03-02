@@ -118,10 +118,10 @@ void printInfo(const WlistInfo& wlistInfo)
 {
   std::cout << "\n pssw size: "<< wlistInfo.min;
   if(wlistInfo.min != wlistInfo.max)
-  std::cout << "-" << wlistInfo.max << "    ";
+  std::cout << "-" << wlistInfo.max;
 
   if(wlistInfo.repeatitions != -1)
-  std::cout << " char repeat: " << wlistInfo.repeatitions;
+  std::cout << "    max repeat: " << wlistInfo.repeatitions;
   std::cout << "\n alphabet:  "  << wlistInfo.alphabet << "\n";
 
   if(wlistInfo.mask.size() != 0)

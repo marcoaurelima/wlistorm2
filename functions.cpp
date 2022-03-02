@@ -83,14 +83,13 @@ std::unique_ptr<WlistSize> getWlistSize(const WlistInfo& wlistInfo)
   {
     int n = wlistInfo.alphabet.size();
 
-    if(wlistInfo.repeatitions == 1)
-    {
-      qtdTotalLines.push_back(static_cast<long int>(fact(n) / fact(n-p)));
-    } else
+    if(wlistInfo.repeatitions == wlistInfo.max)
     {
       qtdTotalLines.push_back(static_cast<long int>(powl(n, p)));
+    } else if(wlistInfo.repeatitions == 1)
+    {
+      qtdTotalLines.push_back(static_cast<long int>(fact(n) / fact(n-p)));
     }
-
   }
 
   // Calculate the size in bytes of a range:
@@ -270,9 +269,11 @@ void makeWordlist(const WlistInfo& wlistInfo)
   {
       while(loop(indexes[i]))
       {
+        if(allowWord(indexes[i]))
         printWord(indexes[i]);
         increment(indexes[i]);
       }
+      if(allowWord(indexes[i]))
       printWord(indexes[i]);
   }
 

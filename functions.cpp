@@ -168,23 +168,23 @@ std::string arroundValue(std::string value, int decimalPoints)
 */
 void printSize(const WlistSize& wlistSize)
 {
-  std::cout << " Output file size (" << wlistSize.ln << " Lines)" << ": \n";
-  std::cout << " [B]  " << wlistSize.by << "\n";
+  std::cout << " Output file size (" << wlistSize.ln << " Lines)" << ":\n [";
+  std::cout << wlistSize.by << "] Bytes\n";
 
-  if(arroundValue(std::to_string(wlistSize.kb), 3) != "0.000")
-  std::cout << " [KB] " << arroundValue(std::to_string(wlistSize.kb), 3) << "\n";
+  if(arroundValue(std::to_string(wlistSize.kb), 2) != "0.00")
+  std::cout << " [" << arroundValue(std::to_string(wlistSize.kb), 2) << "] Kb\n";
 
   if(arroundValue(std::to_string(wlistSize.mb), 3) != "0.000")
-  std::cout << " [MB] " << arroundValue(std::to_string(wlistSize.mb), 3) << "\n";
+  std::cout << " [" << arroundValue(std::to_string(wlistSize.mb), 3) << "] Mb\n";
 
   if(arroundValue(std::to_string(wlistSize.gb), 2) != "0.00")
-  std::cout << " [GB] " << arroundValue(std::to_string(wlistSize.gb), 2) << "\n";
+  std::cout << " [" << arroundValue(std::to_string(wlistSize.gb), 2) << "] Gb\n";
 
   if(arroundValue(std::to_string(wlistSize.tb), 2) != "0.00")
-  std::cout << " [TB] " << arroundValue(std::to_string(wlistSize.tb), 2) << "\n";
+  std::cout << " [" << arroundValue(std::to_string(wlistSize.tb), 2) << "] Tb\n";
 
   if(arroundValue(std::to_string(wlistSize.pb), 2) != "0.00")
-  std::cout << " [PB] " << arroundValue(std::to_string(wlistSize.pb), 2) << " \n";
+  std::cout << " [" << arroundValue(std::to_string(wlistSize.pb), 2) << "] Pb\n";
 
   std::cout << "\n";
 }

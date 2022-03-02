@@ -13,11 +13,7 @@ void printLogo()
 }
 
 
-/**
-    Calculate the factorial of a number..
-    @param Comand-line values.
-    @return Smart point to a WlistInfo.
-*/
+//Calculate the factorial of a number..
 std::unique_ptr<WlistInfo> getWlistInfo(int argc, char* argv[])
 {
 
@@ -52,11 +48,7 @@ std::unique_ptr<WlistInfo> getWlistInfo(int argc, char* argv[])
 }
 
 
-/**
-    Calculate the factorial of a number..
-    @param Value.
-    @return Factorial of value.
-*/
+// Calculate the factorial of a number..
 long unsigned fact(long unsigned n)
 {
   int result = 1;
@@ -68,11 +60,7 @@ long unsigned fact(long unsigned n)
 }
 
 
-/**
-    Calculate word list size.
-    @param Reference to a WlistInfo.
-    @return Smart Pointer to a WlistSize that contains the size in MB, GB, Tb and PB.
-*/
+// Calculate word list size.
 std::unique_ptr<WlistSize> getWlistSize(const WlistInfo& wlistInfo)
 {
   // For each value on range (params 1 and 2 of comand-line entry)
@@ -92,7 +80,7 @@ std::unique_ptr<WlistSize> getWlistSize(const WlistInfo& wlistInfo)
     }
   }
 
-  // Calculate the size in bytes of a range:
+  // Now, calculate the size in bytes of a range:
 
   int realMaskSize = 0; // Size of mask without all '~'
   for(auto& i : wlistInfo.mask)
@@ -109,13 +97,11 @@ std::unique_ptr<WlistSize> getWlistSize(const WlistInfo& wlistInfo)
 
   auto wlistSize = std::make_unique<WlistSize>();
 
-
   for(unsigned i=0;i<=qtdTotalLines.size();i++)
   {
     wlistSize->ln += qtdTotalLines[i];
     wlistSize->by += sizeLines[i];
   }
-
 
   wlistSize->kb = wlistSize->by / pow(1024, 1);
   wlistSize->mb = wlistSize->by / pow(1024, 2);
@@ -127,11 +113,7 @@ std::unique_ptr<WlistSize> getWlistSize(const WlistInfo& wlistInfo)
 }
 
 
-/**
-    Print information of comand-line entry.
-    @param Reference to a WlistInfo.
-    @return void.
-*/
+// Print information of comand-line entry.
 void printInfo(const WlistInfo& wlistInfo)
 {
   std::cout << "\n pssw size: "<< wlistInfo.min;
@@ -148,11 +130,7 @@ void printInfo(const WlistInfo& wlistInfo)
 }
 
 
-/**
-    Arround double value in string
-    @param value and quantity of decimal points
-    @return string.
-*/
+// Arround double value in string
 std::string arroundValue(std::string value, int decimalPoints)
 {
   value += "000";
@@ -160,11 +138,7 @@ std::string arroundValue(std::string value, int decimalPoints)
 }
 
 
-/**
-    Print information of file size output.
-    @param Reference to a WlistSize.
-    @return void.
-*/
+// Print information of file size output.
 void printSize(const WlistSize& wlistSize)
 {
   std::cout << " Output file size (" << wlistSize.ln << " Lines)" << ":\n [";
@@ -201,7 +175,7 @@ bool printContinue()
   return true;
 }
 
-
+// Produce a wordlist in screen or file
 void makeWordlist(const WlistInfo& wlistInfo, const WlistSize& wlistSize)
 {
   // The combination will occur throung manipulating integer indexes.
@@ -276,7 +250,6 @@ void makeWordlist(const WlistInfo& wlistInfo, const WlistSize& wlistSize)
       return;
     }
 
-
     cont++;
 
     for(auto& i : indexes){ file << wlistInfo.alphabet[i]; }
@@ -298,6 +271,5 @@ void makeWordlist(const WlistInfo& wlistInfo, const WlistSize& wlistSize)
 
   file.close();
 
-  std::cout << " ***\n\n";
-
+  std::cout << "\n 100% Completed!\n ***\n\n";
 }

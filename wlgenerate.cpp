@@ -38,41 +38,37 @@ void printWord(const std::string& alphabet, const std::string mask, MASK_TYPE ma
 
   std::cout << "[" << cont++ << "] ";
 
-  std::string word;
-  for(auto& i : indexes)
-  {
-      word += alphabet[i];
-  }
-
   if(maskType == MASK_TYPE::NOT)
   {
-   std::cout << word;
+    for(auto& i : indexes) { std::cout << alphabet[i]; }
   } else
   if(maskType == MASK_TYPE::BEG)
   {
-   std::cout << mask.substr(0, 3) << word;
+    for(auto& i : mask.substr(0, mask.size()-3)) { std::cout << i; }
+    for(auto& i : indexes) { std::cout << alphabet[i]; }
   } else
   if(maskType == MASK_TYPE::END)
   {
-   std::cout << word << mask.substr(3, mask.size()-1);
+    for(auto& i : indexes) { std::cout << alphabet[i]; }
+    for(auto& i : mask.substr(3, mask.size()-1)) { std::cout << i; }
   } else
   if(maskType == MASK_TYPE::MIX)
   {
-    std::string result;
+    std::stringstream ss;
 
     int j = 0;
     for(auto& i : mask){
         if(i != '~'){
-            result += i;
+            ss << i;
         } else {
-           result += word[j];
+           ss << alphabet[indexes[j]];
            ++j;
         }
     }
-    std::cout << result;
+    for(auto& k : ss.str()) { std::cout << k; }
   }
 
-  std::cout << "\n";
+  std::cout << '\n';
 }
 
 void writeWord(const std::string& alphabet, const std::string mask, MASK_TYPE maskType,  const std::vector<int>& indexes, FILE* file)
@@ -107,7 +103,6 @@ void writeWord(const std::string& alphabet, const std::string mask, MASK_TYPE ma
     }
     for(auto& k : ss.str()) { fputc(k, file); }
   }
-
 
   fputc('\n', file);
 }
@@ -159,6 +154,7 @@ void makeWordlist(WlistInfo& wlistInfo)
           printWord(wlistInfo.alphabet, wlistInfo.mask, wlistInfo.maskType, indexes[i]);
           increment(wlistInfo.alphabet, indexes[i]);
         }
+        //exit(0);
         if(allowWord(wlistInfo.repeatitions, wlistInfo.max, indexes[i]))
         printWord(wlistInfo.alphabet, wlistInfo.mask, wlistInfo.maskType, indexes[i]);
     }

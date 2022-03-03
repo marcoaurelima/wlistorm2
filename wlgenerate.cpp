@@ -58,7 +58,18 @@ void printWord(const std::string& alphabet, const std::string mask, MASK_TYPE ma
   } else
   if(maskType == MASK_TYPE::MIX)
   {
-   //std::cout << word;
+    std::string result;
+
+    int j = 0;
+    for(auto& i : mask){
+        if(i != '~'){
+            result += i;
+        } else {
+           result += word[j];
+           ++j;
+        }
+    }
+    std::cout << result;
   }
 
   std::cout << "\n";

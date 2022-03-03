@@ -84,13 +84,13 @@ void writeWord(const std::string& alphabet, const std::string mask, MASK_TYPE ma
   } else
   if(maskType == MASK_TYPE::BEG)
   {
-    for(auto& i : mask.substr(0, 3)) { fputc(i, file); }
+    for(auto& i : mask.substr(0, mask.size()-3)) { fputc(i, file); }
     for(auto& i : indexes) { fputc(alphabet[i], file); }
   } else
   if(maskType == MASK_TYPE::END)
   {
-    for(auto& i : indexes) { fputc(i, file); }
-    for(auto& i : mask.substr(3, mask.size()-1)) { fputc(alphabet[i], file); }
+    for(auto& i : indexes) { fputc(alphabet[i], file); }
+    for(auto& i : mask.substr(3, mask.size()-1)) { fputc(i, file); }
   } else
   if(maskType == MASK_TYPE::MIX)
   {

@@ -1,11 +1,11 @@
 #include "wlgenerate.h"
 
-void increment(WlistInfo& wlistInfo, std::vector<int>& indexes)
+void increment(std::string& alphabet, std::vector<int>& indexes)
 {
   indexes[indexes.size()-1]++;
   for(int i=indexes.size()-1;i>=1;i--)
   {
-    if(indexes[i] == wlistInfo.alphabet.size())
+    if(indexes[i] == alphabet.size())
     {
       indexes[i] = 0;
       indexes[i-1]++;
@@ -14,8 +14,10 @@ void increment(WlistInfo& wlistInfo, std::vector<int>& indexes)
 };
 
 // Verify if the quantity of repeatitions is OK in current word.
-bool allowWord(WlistInfo& wlistInfo, const std::vector<int>& indexes)
+bool allowWord(int repeatitions, int max, const std::vector<int>& indexes)
 {
+  if(repeatitions == max){ return true; }
+
   for(unsigned i=0;i<indexes.size();i++)
   {
     int cont = 0;
@@ -23,18 +25,18 @@ bool allowWord(WlistInfo& wlistInfo, const std::vector<int>& indexes)
     {
       if(indexes[j] == indexes[i]){ cont++; }
     }
-    if(cont > wlistInfo.repeatitions) { return false; }
+    if(cont > repeatitions) { return false; }
   }
   return true;
 };
 
 
-void handleWord(WlistInfo& wlistInfo, WlistSize& wlistSize, const std::vector<int>& indexes, FILE* file2)
+void handleWord(std::string& alphabet, std::string& filename, const std::vector<int>& indexes, FILE* file2)
 {
   static long unsigned cont = 1;
 
 /*
-  if(wlistInfo.filename == "Terminal")
+  if(filename == "Terminal")
   {
     std::cout << "[" << cont++ << "] ";
     for(auto& i : indexes){ std::cout << wlistInfo.alphabet[i]; }
@@ -45,24 +47,24 @@ void handleWord(WlistInfo& wlistInfo, WlistSize& wlistSize, const std::vector<in
   cont++;
 
   std::string word;
-  for(auto& i : indexes){ word += wlistInfo.alphabet[i]; }
+  for(auto& i : indexes){ word += alphabet[i]; }
 
   fprintf(file2, "%s\n", word.c_str());
 
 };
 
-bool loop(WlistInfo& wlistInfo, const std::vector<int>& indexes)
+bool loop(std::string& alphabet, const std::vector<int>& indexes)
 {
     for(const auto& val : indexes)
     {
-      if(val != wlistInfo.alphabet.size()-1){ return true; }
+      if(val != alphabet.size()-1){ return true; }
     }
     return false;
 };
 
 
 // Produce a wordlist in screen or file
-void makeWordlist(WlistInfo& wlistInfo, WlistSize& wlistSize)
+void makeWordlist(WlistInfo& wlistInfo)
 {
   // The combination will occur throung manipulating integer indexes.
   // A integer vector will be used.
@@ -78,7 +80,7 @@ void makeWordlist(WlistInfo& wlistInfo, WlistSize& wlistSize)
   }
 
 
-  /*
+  
   std::ofstream file;
   if(wlistInfo.filename != "Terminal")
   {
@@ -86,7 +88,7 @@ void makeWordlist(WlistInfo& wlistInfo, WlistSize& wlistSize)
     file.close();
     file = std::ofstream(wlistInfo.filename, std::ios::app);
   }
-  */
+
   FILE* file2 = NULL;
   if(wlistInfo.filename != "Terminal")
   {
@@ -97,14 +99,14 @@ void makeWordlist(WlistInfo& wlistInfo, WlistSize& wlistSize)
 
   for(unsigned i=0;i<indexes.size();i++)
   {
-      while(loop(wlistInfo, indexes[i]))
+      while(loop(wlistInfo.alphabet, indexes[i]))
       {
-        if(allowWord(wlistInfo, indexes[i]))
-        handleWord(wlistInfo, wlistSize, indexes[i], file2);
-        increment(wlistInfo, indexes[i]);
+        if(allowWord(wlistInfo.repeatitions, wlistInfo.max, indexes[i]))
+        handleWord(wlistInfo.alphabet, wlistInfo.filename, indexes[i], file2);
+        increment(wlistInfo.alphabet, indexes[i]);
       }
-      if(allowWord(wlistInfo, indexes[i]))
-      handleWord(wlistInfo, wlistSize, indexes[i], file2);
+      if(allowWord(wlistInfo.repeatitions, wlistInfo.max, indexes[i]))
+      handleWord(wlistInfo.alphabet, wlistInfo.filename, indexes[i], file2);
   }
 
   //file.close();

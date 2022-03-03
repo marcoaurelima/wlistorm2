@@ -13,7 +13,7 @@ int main(int argc, char* argv[]){
 
   if(!printContinue()){ return 0; }
 
-  makeWordlist(*wlistInfo, *wlistSize);
+  makeWordlist(*wlistInfo);
 
   return 0;
 }

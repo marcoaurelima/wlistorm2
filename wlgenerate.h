@@ -4,14 +4,15 @@
 #include <iostream>
 #include <vector>
 
-void increment(WlistInfo& wlistInfo, std::vector<int>& indexes);
+bool loop(std::string& alphabet, const std::vector<int>& indexes);
 
-bool allowWord(WlistInfo& wlistInfo, const std::vector<int>& indexes);
+bool allowWord(int repeatitions, const std::vector<int>& indexes);
 
-void handleWord(WlistInfo& wlistInfo, WlistSize& wlistSize, const std::vector<int>& indexes, FILE* file2);
+void increment(std::string& alphabet, std::vector<int>& indexes);
 
-bool loop(WlistInfo& wlistInfo, const std::vector<int>& indexes);
+void handleWord(std::string& alphabet, std::string& filename, const std::vector<int>& indexes, FILE* file2);
 
-void makeWordlist(WlistInfo& wlistInfo, WlistSize& wlistSize);
+
+void makeWordlist(WlistInfo& wlistInfo);
 
 #endif

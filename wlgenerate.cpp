@@ -14,7 +14,7 @@ void increment(std::string& alphabet, std::vector<int>& indexes)
 };
 
 // Verify if the quantity of repeatitions is OK in current word.
-bool allowWord(int repeatitions, int max, const std::vector<int>& indexes)
+bool allowWord(const int& repeatitions, const int& max, const std::vector<int>& indexes)
 {
   if(repeatitions == max){ return true; }
 
@@ -31,33 +31,31 @@ bool allowWord(int repeatitions, int max, const std::vector<int>& indexes)
 };
 
 
-void handleWord(std::string& alphabet, std::string& filename, const std::vector<int>& indexes, FILE* file2)
+
+void printWord(std::string& alphabet, const std::vector<int>& indexes)
 {
   static long unsigned cont = 1;
 
-/*
-  if(filename == "Terminal")
-  {
-    std::cout << "[" << cont++ << "] ";
-    for(auto& i : indexes){ std::cout << wlistInfo.alphabet[i]; }
-    std::cout << "\n";
-    return;
-  }
-*/
-  cont++;
+  std::cout << "[" << cont++ << "] ";
+  for(auto& i : indexes){ std::cout << alphabet[i]; }
+  std::cout << "\n";
+}
 
+void writeWord(std::string& alphabet, const std::vector<int>& indexes, FILE* file)
+{
   std::string word;
-  for(auto& i : indexes){ word += alphabet[i]; }
+  for(auto& i : indexes)
+  {
+    fputc(alphabet[i], file);
+  }
+  fputc('\n', file);
+}
 
-  fprintf(file2, "%s\n", word.c_str());
-
-};
-
-bool loop(std::string& alphabet, const std::vector<int>& indexes)
+bool loop(const int& alphabetSize, const std::vector<int>& indexes)
 {
     for(const auto& val : indexes)
     {
-      if(val != alphabet.size()-1){ return true; }
+      if(val != alphabetSize){ return true; }
     }
     return false;
 };
@@ -80,37 +78,45 @@ void makeWordlist(WlistInfo& wlistInfo)
   }
 
 
-  
-  std::ofstream file;
+  FILE* file = NULL;
   if(wlistInfo.filename != "Terminal")
   {
-    file = std::ofstream(wlistInfo.filename, std::ios::trunc);
-    file.close();
-    file = std::ofstream(wlistInfo.filename, std::ios::app);
+    file = fopen(wlistInfo.filename.c_str(), "w");
+    fclose(file);
+    file = fopen(wlistInfo.filename.c_str(), "a");
   }
 
-  FILE* file2 = NULL;
-  if(wlistInfo.filename != "Terminal")
-  {
-    file2 = fopen(wlistInfo.filename.c_str(), "w");
-    fclose(file2);
-    file2 = fopen(wlistInfo.filename.c_str(), "a");
-  }
+  int alphabetSize = static_cast<int>(wlistInfo.alphabet.size()-1);
 
-  for(unsigned i=0;i<indexes.size();i++)
+  if(wlistInfo.filename == "Terminal")
   {
-      while(loop(wlistInfo.alphabet, indexes[i]))
-      {
+    for(unsigned i=0;i<indexes.size();i++)
+    {
+        while(loop(alphabetSize, indexes[i]))
+        {
+          if(allowWord(wlistInfo.repeatitions, wlistInfo.max, indexes[i]))
+          printWord(wlistInfo.alphabet, indexes[i]);
+          increment(wlistInfo.alphabet, indexes[i]);
+        }
         if(allowWord(wlistInfo.repeatitions, wlistInfo.max, indexes[i]))
-        handleWord(wlistInfo.alphabet, wlistInfo.filename, indexes[i], file2);
-        increment(wlistInfo.alphabet, indexes[i]);
-      }
-      if(allowWord(wlistInfo.repeatitions, wlistInfo.max, indexes[i]))
-      handleWord(wlistInfo.alphabet, wlistInfo.filename, indexes[i], file2);
+        printWord(wlistInfo.alphabet, indexes[i]);
+    }
+  } else
+  {
+    for(unsigned i=0;i<indexes.size();i++)
+    {
+        while(loop(alphabetSize, indexes[i]))
+        {
+          if(allowWord(wlistInfo.repeatitions, wlistInfo.max, indexes[i]))
+          writeWord(wlistInfo.alphabet, indexes[i], file);
+          increment(wlistInfo.alphabet, indexes[i]);
+        }
+        if(allowWord(wlistInfo.repeatitions, wlistInfo.max, indexes[i]))
+        writeWord(wlistInfo.alphabet, indexes[i], file);
+    }
   }
 
-  //file.close();
-  fclose(file2);
+  fclose(file);
 
   std::cout << "\n 100% Completed!\n ***\n\n";
 }

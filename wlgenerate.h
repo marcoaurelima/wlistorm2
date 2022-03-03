@@ -10,9 +10,9 @@ bool allowWord(const int& repeatitions, const int& max, const std::vector<int>& 
 
 void increment(std::string& alphabet, std::vector<int>& indexes);
 
-void printWord(std::string& alphabet, const std::vector<int>& indexes);
+void printWord(const std::string& alphabet, const std::string mask, const std::vector<int>& indexes);
 
-void writeWord(std::string& alphabet, const std::vector<int>& indexes, FILE* file);
+void writeWord(const std::string& alphabet, const std::vector<int>& indexes, FILE* file);
 
 
 void makeWordlist(WlistInfo& wlistInfo);

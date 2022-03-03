@@ -8,7 +8,7 @@ void printLogo()
  \   \/\/   /  | |  |/  ___/\   __\/  _ \_  __ \/     \
   \        /|  |_|  |\___ \  |  | (  <_> )  | \/  Y Y  \
    \__/\  / |____/__/____  > |__|  \____/|__|  |__|_|  /
-        \/               \/ 22   wordlist generator  \/)" << '\n';
+        \/               \/     wordlist generator  \/)" << '\n';
 };
 
 bool printContinue()

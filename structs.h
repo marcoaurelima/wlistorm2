@@ -3,13 +3,21 @@
 
 #include <iostream>
 
+enum class MASK_TYPE{
+  NOT, // The word does not will use mask
+  BEG, // Mask goes to beggining of the word
+  END, // Mask goes to end of of word
+  MIX  // Mask is mixed in the word
+};
+
 struct WlistInfo{
   int min;
   int max;
   int repeatitions;
-  std::string mask;
   std::string alphabet;
   std::string filename;
+  std::string mask;
+  MASK_TYPE maskType;
 };
 
 struct WlistSize{

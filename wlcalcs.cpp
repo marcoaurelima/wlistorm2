@@ -15,6 +15,7 @@ std::unique_ptr<WlistInfo> getWlistInfo(int argc, char* argv[])
   wlistInfo->repeatitions = atoi(argv[2]);     // -1 means allow all repeatitions.
   wlistInfo->filename = "Terminal"; // If not was not defined a outputfile.
   wlistInfo->mask = "";
+  wlistInfo->maskType = MASK_TYPE::NOT;
 
   for(int i=3;i<argc;i++)
   {
@@ -29,9 +30,22 @@ std::unique_ptr<WlistInfo> getWlistInfo(int argc, char* argv[])
     if(strcmp(argv[i], "-m") == 0)
     {
       wlistInfo->mask = std::string(argv[i+1]);
+
+      if(wlistInfo->mask.substr(0,3) == "...")
+      {
+        wlistInfo->maskType = MASK_TYPE::BEG;
+      } else
+      if(wlistInfo->mask.substr(wlistInfo->mask.size()-3, wlistInfo->mask.size()-1) == "...")
+      {
+        wlistInfo->maskType = MASK_TYPE::END;
+      } else
+      {
+        wlistInfo->maskType = MASK_TYPE::MIX;
+      }
+
     }
   }
-
+  std::cout << "type mask: " << static_cast<int>(wlistInfo->maskType) << "\n\n";
   return wlistInfo;
 }
 

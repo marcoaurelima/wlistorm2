@@ -32,16 +32,19 @@ bool allowWord(const int& repeatitions, const int& max, const std::vector<int>& 
 
 
 
-void printWord(std::string& alphabet, const std::vector<int>& indexes)
+void printWord(const std::string& alphabet, const std::string mask, MASK_TYPE maskType, const std::vector<int>& indexes)
 {
   static long unsigned cont = 1;
 
   std::cout << "[" << cont++ << "] ";
-  for(auto& i : indexes){ std::cout << alphabet[i]; }
+  for(auto& i : indexes)
+  {
+     std::cout << alphabet[i];
+   }
   std::cout << "\n";
 }
 
-void writeWord(std::string& alphabet, const std::vector<int>& indexes, FILE* file)
+void writeWord(const std::string& alphabet, const std::vector<int>& indexes, FILE* file)
 {
   std::string word;
   for(auto& i : indexes)
@@ -95,11 +98,11 @@ void makeWordlist(WlistInfo& wlistInfo)
         while(loop(alphabetSize, indexes[i]))
         {
           if(allowWord(wlistInfo.repeatitions, wlistInfo.max, indexes[i]))
-          printWord(wlistInfo.alphabet, indexes[i]);
+          printWord(wlistInfo.alphabet, wlistInfo.mask, wlistInfo.maskType, indexes[i]);
           increment(wlistInfo.alphabet, indexes[i]);
         }
         if(allowWord(wlistInfo.repeatitions, wlistInfo.max, indexes[i]))
-        printWord(wlistInfo.alphabet, indexes[i]);
+        printWord(wlistInfo.alphabet, wlistInfo.mask, wlistInfo.maskType, indexes[i]);
     }
   } else
   {

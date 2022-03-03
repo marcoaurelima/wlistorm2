@@ -1,5 +1,5 @@
-#ifndef FUNCTIONS_H
-#define FUNCTIONS_H
+#ifndef WLCALCS_H
+#define WLCALCS_H
 #include <iostream>
 #include <sstream>
 #include <fstream>
@@ -9,19 +9,11 @@
 #include <cstring>
 #include "structs.h"
 
-void printLogo();
 std::unique_ptr<WlistInfo> getWlistInfo(int argc, char* argv[]);
-
+std::unique_ptr<WlistSize> getWlistSize(const WlistInfo& wlistInfo);
 std::string arroundValue(std::string value, int decimalPoints);
-
-long unsigned fact(long unsigned n);
-
 void printInfo(const WlistInfo& wlistInfo);
 void printSize(const WlistSize& wlistSize);
-bool printContinue();
-
-void makeWordlist(const WlistInfo& wlistInfo, const WlistSize& wlistSize);
-
-std::unique_ptr<WlistSize> getWlistSize(const WlistInfo& wlistInfo);
+long unsigned fact(long unsigned n);
 
 #endif

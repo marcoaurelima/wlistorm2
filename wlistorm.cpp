@@ -1,4 +1,6 @@
-#include "functions.h"
+#include "wlcalcs.h"
+#include "wlgenerate.h"
+#include "wlscreen.h"
 
 int main(int argc, char* argv[]){
   printLogo();

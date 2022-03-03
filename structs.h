@@ -1,3 +1,8 @@
+#ifndef STRUCTS_H
+#define STRUCTS_H
+
+#include <iostream>
+
 struct WlistInfo{
   int min;
   int max;
@@ -16,3 +21,5 @@ struct WlistSize{
   double tb;
   double pb;
 };
+
+#endif

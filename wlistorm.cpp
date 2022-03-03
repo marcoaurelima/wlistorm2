@@ -15,14 +15,16 @@ void testes()
 int main(int argc, char* argv[]){
   printLogo();
 
-  testes();
+  //testes();
 
   auto wlistInfo = getWlistInfo(argc, argv);
   printInfo(*wlistInfo);
 
   auto wlistSize = getWlistSize(*wlistInfo);
+  //return 0;
   printSize(*wlistSize);
 
+  //return 0;
   if(!printContinue()){ return 0; }
 
   makeWordlist(*wlistInfo);

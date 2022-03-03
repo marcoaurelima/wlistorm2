@@ -17,6 +17,8 @@ std::unique_ptr<WlistInfo> getWlistInfo(int argc, char* argv[])
   wlistInfo->mask = "";
   wlistInfo->maskType = MASK_TYPE::NOT;
 
+
+
   for(int i=3;i<argc;i++)
   {
     if(strcmp(argv[i], "-r") == 0)
@@ -45,7 +47,14 @@ std::unique_ptr<WlistInfo> getWlistInfo(int argc, char* argv[])
 
     }
   }
+
+  /*
+  std::cout << "mask: " << wlistInfo->mask << "\n\n";
   std::cout << "type mask: " << static_cast<int>(wlistInfo->maskType) << "\n\n";
+  std::cout << "repeat: " << wlistInfo->repeatitions << "\n\n";
+  std::cout << "filename: " << wlistInfo->filename << "\n\n";
+
+  exit(0); */
   return wlistInfo;
 }
 
@@ -53,11 +62,10 @@ std::unique_ptr<WlistInfo> getWlistInfo(int argc, char* argv[])
 // Calculate the factorial of a number..
 long unsigned fact(long unsigned n)
 {
-  int result = 1;
-  for(long unsigned i=1;i<=n;i++)
-  {
-    result *= i;
-  }
+  if(n == 1 || n == 2){ return 1; }
+
+  long unsigned result = 1;
+  for(long unsigned i=1;i<=n;i++) { result *= i; }
   return result;
 }
 
@@ -69,10 +77,10 @@ std::unique_ptr<WlistSize> getWlistSize(const WlistInfo& wlistInfo)
   std::vector<long unsigned> qtdTotalLines;
   std::vector<long unsigned> sizeLines;
 
-  for(unsigned p=wlistInfo.min;p<=wlistInfo.max;p++)
-  {
-    int n = wlistInfo.alphabet.size();
+  const int n = static_cast<int>(wlistInfo.alphabet.size());
 
+  for(int p=wlistInfo.min;p<=wlistInfo.max;p++)
+  {
     if(wlistInfo.repeatitions == wlistInfo.max)
     {
       qtdTotalLines.push_back(static_cast<long int>(powl(n, p)));
@@ -81,7 +89,6 @@ std::unique_ptr<WlistSize> getWlistSize(const WlistInfo& wlistInfo)
       qtdTotalLines.push_back(static_cast<long int>(fact(n) / fact(n-p)));
     }
   }
-
   // Now, calculate the size in bytes of a range:
 
   int realMaskSize = 0; // Size of mask without all '~'
@@ -91,7 +98,7 @@ std::unique_ptr<WlistSize> getWlistSize(const WlistInfo& wlistInfo)
   }
 
   int i = 0;
-  for(unsigned p=wlistInfo.min;p<=wlistInfo.max;p++)
+  for(int p=wlistInfo.min;p<=wlistInfo.max;p++)
   {
     // (p+1) Because of \n in each line
     sizeLines.push_back((qtdTotalLines[i++] + realMaskSize) * (p+1));

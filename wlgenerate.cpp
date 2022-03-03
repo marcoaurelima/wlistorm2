@@ -37,10 +37,30 @@ void printWord(const std::string& alphabet, const std::string mask, MASK_TYPE ma
   static long unsigned cont = 1;
 
   std::cout << "[" << cont++ << "] ";
+
+  std::string word;
   for(auto& i : indexes)
   {
-     std::cout << alphabet[i];
-   }
+      word += alphabet[i];
+  }
+
+  if(maskType == MASK_TYPE::NOT)
+  {
+   std::cout << word;
+  } else
+  if(maskType == MASK_TYPE::BEG)
+  {
+   std::cout << mask.substr(0, 3) << word;
+  } else
+  if(maskType == MASK_TYPE::END)
+  {
+   std::cout << word << mask.substr(3, mask.size()-1);
+  } else
+  if(maskType == MASK_TYPE::MIX)
+  {
+   //std::cout << word;
+  }
+
   std::cout << "\n";
 }
 

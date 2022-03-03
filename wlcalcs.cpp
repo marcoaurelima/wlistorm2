@@ -31,11 +31,11 @@ std::unique_ptr<WlistInfo> getWlistInfo(int argc, char* argv[])
     {
       wlistInfo->mask = std::string(argv[i+1]);
 
-      if(wlistInfo->mask.substr(0,3) == "...")
+      if(wlistInfo->mask.substr(wlistInfo->mask.size()-3, wlistInfo->mask.size()-1) == "...")
       {
         wlistInfo->maskType = MASK_TYPE::BEG;
       } else
-      if(wlistInfo->mask.substr(wlistInfo->mask.size()-3, wlistInfo->mask.size()-1) == "...")
+      if(wlistInfo->mask.substr(0,3) == "...")
       {
         wlistInfo->maskType = MASK_TYPE::END;
       } else

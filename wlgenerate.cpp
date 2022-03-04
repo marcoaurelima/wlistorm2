@@ -36,7 +36,7 @@ void printWord(const std::string& alphabet, const std::string mask, MASK_TYPE ma
 {
   static long unsigned cont = 1;
 
-  std::cout << "[" << cont++ << "] ";
+  std::cout << " [" << cont++ << "] ";
 
   if(maskType == MASK_TYPE::NOT)
   {
@@ -154,7 +154,6 @@ void makeWordlist(WlistInfo& wlistInfo)
           printWord(wlistInfo.alphabet, wlistInfo.mask, wlistInfo.maskType, indexes[i]);
           increment(wlistInfo.alphabet, indexes[i]);
         }
-        //exit(0);
         if(allowWord(wlistInfo.repeatitions, wlistInfo.max, indexes[i]))
         printWord(wlistInfo.alphabet, wlistInfo.mask, wlistInfo.maskType, indexes[i]);
     }
@@ -173,7 +172,10 @@ void makeWordlist(WlistInfo& wlistInfo)
     }
   }
 
-  fclose(file);
+  if(wlistInfo.filename != "Terminal")
+  {
+    fclose(file);
+  }
 
   std::cout << "\n 100% Completed!\n ***\n\n";
 }

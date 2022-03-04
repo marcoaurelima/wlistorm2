@@ -15,5 +15,6 @@ std::string arroundValue(std::string value, int decimalPoints);
 void printInfo(const WlistInfo& wlistInfo);
 void printSize(const WlistSize& wlistSize);
 long unsigned fact(long unsigned n);
+void maskIsValid(std::string mask, int min, int max);
 
 #endif

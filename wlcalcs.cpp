@@ -36,6 +36,7 @@ std::unique_ptr<WlistInfo> getWlistInfo(int argc, char* argv[])
     {
       wlistInfo->mask = std::string(argv[i+1]);
 
+
       if(wlistInfo->mask.substr(wlistInfo->mask.size()-3, wlistInfo->mask.size()-1) == "...")
       {
         wlistInfo->maskType = MASK_TYPE::BEG;
@@ -46,6 +47,7 @@ std::unique_ptr<WlistInfo> getWlistInfo(int argc, char* argv[])
       } else
       {
         wlistInfo->maskType = MASK_TYPE::MIX;
+        maskIsValid(wlistInfo->mask, wlistInfo->min, wlistInfo->max);
       }
 
     }
@@ -55,6 +57,27 @@ std::unique_ptr<WlistInfo> getWlistInfo(int argc, char* argv[])
   return wlistInfo;
 }
 
+void maskIsValid(std::string mask, int min, int max)
+{
+  if(min != max)
+  {
+    std::cout << "\n [Error] To use this type of mask, the params <min> and <max> should\n";
+    std::cout << "         have the same value. \n\n";
+    exit(0);
+  }
+
+  int cont = 0;
+  for(unsigned i=0;i<mask.size();i++)
+  {
+    if(mask[i] == '~'){ cont ++; }
+  }
+
+  if(cont != max)
+  {
+    std::cout << "\n [Error] the number of ~ should be equals to size of word.\n\n";
+    exit(0);
+  }
+}
 
 // Calculate the factorial of a number..
 long unsigned fact(long unsigned n)

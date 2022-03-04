@@ -16,5 +16,5 @@ void printInfo(const WlistInfo& wlistInfo);
 void printSize(const WlistSize& wlistSize);
 long unsigned fact(long unsigned n);
 void maskIsValid(std::string alphabet, std::string mask, int min, int max, int repeatitions);
-
+void removeRedundance(std::string& alphabet);
 #endif

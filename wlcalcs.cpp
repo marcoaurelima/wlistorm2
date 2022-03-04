@@ -13,6 +13,7 @@ std::unique_ptr<WlistInfo> getWlistInfo(int argc, char* argv[])
   wlistInfo->min = atoi(argv[1]);
   wlistInfo->max = atoi(argv[2]);
   wlistInfo->alphabet = std::string(argv[3]);
+  removeRedundance(wlistInfo->alphabet);
 
   // Default values
   wlistInfo->repeatitions = atoi(argv[2]);     // -1 means allow all repeatitions.
@@ -154,6 +155,20 @@ std::unique_ptr<WlistSize> getWlistSize(const WlistInfo& wlistInfo)
   return wlistSize;
 }
 
+void removeRedundance(std::string& alphabet)
+{
+
+  for (unsigned i = 0; i < alphabet.size(); i++ )
+  {
+    unsigned j = i + 1;
+    while (j < alphabet.size())
+    {
+      if (alphabet[i] == alphabet[j]) { alphabet.erase( j, 1 ); }
+      else { ++j; }
+    }
+  }
+
+}
 
 // Print information of comand-line entry.
 void printInfo(const WlistInfo& wlistInfo)

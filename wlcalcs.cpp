@@ -47,7 +47,7 @@ std::unique_ptr<WlistInfo> getWlistInfo(int argc, char* argv[])
       } else
       {
         wlistInfo->maskType = MASK_TYPE::MIX;
-        maskIsValid(wlistInfo->mask, wlistInfo->min, wlistInfo->max);
+        maskIsValid(wlistInfo->alphabet, wlistInfo->mask, wlistInfo->min, wlistInfo->max, wlistInfo->repeatitions);
       }
 
     }
@@ -57,14 +57,8 @@ std::unique_ptr<WlistInfo> getWlistInfo(int argc, char* argv[])
   return wlistInfo;
 }
 
-void maskIsValid(std::string mask, int min, int max)
+void maskIsValid(std::string alphabet, std::string mask, int min, int max, int repeatitions)
 {
-  if(min != max)
-  {
-    std::cout << "\n [Error] To use this type of mask, the params <min> and <max> should\n";
-    std::cout << "         have the same value. \n\n";
-    exit(0);
-  }
 
   int cont = 0;
   for(unsigned i=0;i<mask.size();i++)
@@ -72,9 +66,28 @@ void maskIsValid(std::string mask, int min, int max)
     if(mask[i] == '~'){ cont ++; }
   }
 
+
+  if(repeatitions == 1)
+  {
+    if(static_cast<int>(alphabet.size()) < cont)
+    {
+      std::cout << "\n\n [Error] The given alphabet is insuficient;\n";
+      std::cout << "         the number of characteres of alphabet\n";
+      std::cout << "         should be major or equals to ~ quantity.\n\n";
+      exit(0);
+    }
+  }
+
+  if(min != max)
+  {
+    std::cout << "\n\n [Error] To use this type of mask, the params <min> and <max> should\n";
+    std::cout << "         have the same value. \n\n";
+    exit(0);
+  }
+
   if(cont != max)
   {
-    std::cout << "\n [Error] the number of ~ should be equals to size of word.\n\n";
+    std::cout << "\n\n [Error] The number of ~ should be equals to size of word.\n\n";
     exit(0);
   }
 }

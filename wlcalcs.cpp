@@ -16,12 +16,10 @@ std::unique_ptr<WlistInfo> getWlistInfo(int argc, char* argv[])
   removeRedundance(wlistInfo->alphabet);
 
   // Default values
-  wlistInfo->repeatitions = atoi(argv[2]);     // -1 means allow all repeatitions.
-  wlistInfo->filename = "Terminal"; // If not was not defined a outputfile.
+  wlistInfo->repeatitions = atoi(argv[2]); // allow all repeatitions.
+  wlistInfo->filename = "Terminal";        // If not was not defined a outputfile.
   wlistInfo->mask = "";
   wlistInfo->maskType = MASK_TYPE::NOT;
-
-
 
   for(int i=3;i<argc;i++)
   {
@@ -37,7 +35,6 @@ std::unique_ptr<WlistInfo> getWlistInfo(int argc, char* argv[])
     {
       wlistInfo->mask = std::string(argv[i+1]);
 
-
       if(wlistInfo->mask.substr(wlistInfo->mask.size()-3, wlistInfo->mask.size()-1) == "...")
       {
         wlistInfo->maskType = MASK_TYPE::BEG;
@@ -50,23 +47,19 @@ std::unique_ptr<WlistInfo> getWlistInfo(int argc, char* argv[])
         wlistInfo->maskType = MASK_TYPE::MIX;
         maskIsValid(wlistInfo->alphabet, wlistInfo->mask, wlistInfo->min, wlistInfo->max, wlistInfo->repeatitions);
       }
-
     }
   }
-
 
   return wlistInfo;
 }
 
 void maskIsValid(std::string alphabet, std::string mask, int min, int max, int repeatitions)
 {
-
   int cont = 0;
   for(unsigned i=0;i<mask.size();i++)
   {
     if(mask[i] == '~'){ cont ++; }
   }
-
 
   if(repeatitions == 1)
   {
@@ -92,6 +85,7 @@ void maskIsValid(std::string alphabet, std::string mask, int min, int max, int r
     exit(0);
   }
 }
+
 
 // Calculate the factorial of a number..
 long unsigned fact(long unsigned n)
@@ -155,9 +149,9 @@ std::unique_ptr<WlistSize> getWlistSize(const WlistInfo& wlistInfo)
   return wlistSize;
 }
 
+
 void removeRedundance(std::string& alphabet)
 {
-
   for (unsigned i = 0; i < alphabet.size(); i++ )
   {
     unsigned j = i + 1;
@@ -167,8 +161,8 @@ void removeRedundance(std::string& alphabet)
       else { ++j; }
     }
   }
-
 }
+
 
 // Print information of comand-line entry.
 void printInfo(const WlistInfo& wlistInfo)

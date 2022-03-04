@@ -13,6 +13,7 @@ void increment(std::string& alphabet, std::vector<int>& indexes)
   }
 };
 
+
 // Verify if the quantity of repeatitions is OK in current word.
 bool allowWord(const int& repeatitions, const int& max, const std::vector<int>& indexes)
 {
@@ -29,7 +30,6 @@ bool allowWord(const int& repeatitions, const int& max, const std::vector<int>& 
   }
   return true;
 };
-
 
 
 void printWord(const std::string& alphabet, const std::string mask, MASK_TYPE maskType, const std::vector<int>& indexes)
@@ -73,7 +73,6 @@ void printWord(const std::string& alphabet, const std::string mask, MASK_TYPE ma
 
 void writeWord(const std::string& alphabet, const std::string mask, MASK_TYPE maskType,  const std::vector<int>& indexes, FILE* file)
 {
-
   if(maskType == MASK_TYPE::NOT)
   {
     for(auto& i : indexes) { fputc(alphabet[i], file); }
@@ -106,6 +105,7 @@ void writeWord(const std::string& alphabet, const std::string mask, MASK_TYPE ma
 
   fputc('\n', file);
 }
+
 
 bool loop(const int& alphabetSize, const std::vector<int>& indexes)
 {

@@ -1,9 +1,12 @@
 #include "wlcalcs.h"
-
+#include "wlscreen.h"
 
 //Calculate the factorial of a number..
 std::unique_ptr<WlistInfo> getWlistInfo(int argc, char* argv[])
 {
+  if(argc == 1){ help(); exit(0); }
+  if(argc == 2 && strcmp(argv[1], "-h") == 0){ help(); exit(0); }
+  if(argc < 4) { std::cout << "\n [error]\n Incomplete parameters. Type \"wlistorm -h for help.\n\n ***\n\n"; exit(0); }
 
   auto wlistInfo = std::make_unique<WlistInfo>();
 
@@ -49,12 +52,6 @@ std::unique_ptr<WlistInfo> getWlistInfo(int argc, char* argv[])
   }
 
 
-  std::cout << "mask: " << wlistInfo->mask << "\n\n";
-  std::cout << "type mask: " << static_cast<int>(wlistInfo->maskType) << "\n\n";
-  std::cout << "repeat: " << wlistInfo->repeatitions << "\n\n";
-  std::cout << "filename: " << wlistInfo->filename << "\n\n";
-
-  //exit(0); 
   return wlistInfo;
 }
 

@@ -177,5 +177,5 @@ void makeWordlist(WlistInfo& wlistInfo)
     fclose(file);
   }
 
-  std::cout << "\n 100% Completed!\n ***\n\n";
+  std::cout << "\n Finished!\n ***\n\n";
 }

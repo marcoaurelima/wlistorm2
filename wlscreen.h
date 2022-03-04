@@ -5,5 +5,6 @@
 
 void printLogo();
 bool printContinue();
+void help();
 
 #endif
